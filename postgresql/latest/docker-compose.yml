@@ -1,6 +1,7 @@
 version: "3"
 services:
     postgres:
+        container_name: mypostgresql_container
         image: postgres:latest
         restart: always
         ports:
@@ -10,4 +11,19 @@ services:
             - POSTGRES_PASSWORD=myuserpass
             - POSTGRES_DB=myuser
         volumes:
-            - "./data/db/postgres:/var/lib/postgresql/data"
+            - "my_postgres_db:/var/lib/postgresql/data"
+
+    pgadmin:
+        container_name: pgadmin_container
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: tchappui@gmail.com
+            PGADMIN_DEFAULT_PASSWORD: admin
+        volumes:
+            - my_pgadmin:/root/.pgadmin
+        ports:
+            - "15050:80"
+
+volumes:
+    my_postgres_db:
+    my_pgadmin:
